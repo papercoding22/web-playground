@@ -7,6 +7,10 @@ import CapturedPropsChange from "./examples/captured-props-demo";
 import StaleClosureDemo from "./examples/stale-closure-demo";
 import StaleClosureDemoSolution from "./examples/stale-clousre-demo-solution";
 import CapturedPropsChangeSolution from "./examples/captured-props-demo-solution";
+import ListView from "./examples/list-view";
+import ListViewSolution from "./examples/list-view-solution";
+import RefreshTokenDemo from "./examples/refresh-token/refresh-token-demo";
+import RefreshTokenChallenge from "./examples/refresh-token-challenge/refresh-token-challenge";
 
 const demos: Record<string, JSX.Element> = {
   "Race Condition": <RaceConditionExample />,
@@ -15,6 +19,10 @@ const demos: Record<string, JSX.Element> = {
   "Stale Closure Solution": <StaleClosureDemoSolution />,
   "Captured Props Change": <CapturedPropsChange />,
   "Captured Props Change Solution": <CapturedPropsChangeSolution />,
+  "List View": <ListView />,
+  "List View Solution": <ListViewSolution />,
+  "Refresh Token Challenge": <RefreshTokenChallenge />,
+  "Refresh Token Demo": <RefreshTokenDemo />,
 };
 
 function App() {
