@@ -11,6 +11,14 @@ import ListView from "./examples/list-view";
 import ListViewSolution from "./examples/list-view-solution";
 import RefreshTokenDemo from "./examples/refresh-token/refresh-token-demo";
 import RefreshTokenChallenge from "./examples/refresh-token-challenge/refresh-token-challenge";
+import DFSWordSearch from "./examples/dfs-word-search";
+
+// ABCCED
+const board = [
+  ["A", "D", "E", "E"],
+  ["S", "F", "C", "S"],
+  ["A", "B", "C", "E"],
+];
 
 const demos: Record<string, JSX.Element> = {
   "Race Condition": <RaceConditionExample />,
@@ -23,15 +31,15 @@ const demos: Record<string, JSX.Element> = {
   "List View Solution": <ListViewSolution />,
   "Refresh Token Challenge": <RefreshTokenChallenge />,
   "Refresh Token Demo": <RefreshTokenDemo />,
+  "DFS Word Search": <DFSWordSearch board={board} word="ABCCED" />,
 };
 
 function App() {
   const [selectedDemo, setSelectedDemo] = useState("");
 
   return (
-    <div style={{ padding: "1rem", fontFamily: "sans-serif" }}>
-      <h1>React Demo Switcher</h1>
-
+    <div style={styles.container}>
+      <h1>React Demo</h1>
       <select
         value={selectedDemo}
         onChange={(e) => setSelectedDemo(e.target.value)}
@@ -61,5 +69,14 @@ function App() {
     </div>
   );
 }
+
+const styles: { [key: string]: React.CSSProperties } = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+};
 
 export default App;
