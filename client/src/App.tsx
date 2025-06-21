@@ -1,4 +1,4 @@
-import { useState, type JSX } from "react";
+import { useEffect, useState, type JSX } from "react";
 import "./App.css";
 
 import RaceConditionExample from "./examples/race-condition";
@@ -37,9 +37,19 @@ const demos: Record<string, JSX.Element> = {
 function App() {
   const [selectedDemo, setSelectedDemo] = useState("");
 
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/hello')
+      .then((res) => res.json())
+      .then((data) => setMessage(data.message))
+      .catch(console.error);
+  }, []);
+
   return (
     <div style={styles.container}>
       <h1>React Demo</h1>
+      <p>{message}</p>
       <select
         value={selectedDemo}
         onChange={(e) => setSelectedDemo(e.target.value)}
