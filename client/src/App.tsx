@@ -12,6 +12,7 @@ import ListViewSolution from "./examples/list-view-solution";
 import RefreshTokenDemo from "./examples/refresh-token/refresh-token-demo";
 import RefreshTokenChallenge from "./examples/refresh-token-challenge/refresh-token-challenge";
 import DFSWordSearch from "./examples/dfs-word-search";
+import IdeaGenerator from "./examples/idea-generator";
 
 // ABCCED
 const board = [
@@ -32,15 +33,16 @@ const demos: Record<string, JSX.Element> = {
   "Refresh Token Challenge": <RefreshTokenChallenge />,
   "Refresh Token Demo": <RefreshTokenDemo />,
   "DFS Word Search": <DFSWordSearch board={board} word="ABCCED" />,
+  "Idea Generator": <IdeaGenerator />,
 };
 
 function App() {
   const [selectedDemo, setSelectedDemo] = useState("");
 
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/hello')
+    fetch("http://localhost:5000/api/hello")
       .then((res) => res.json())
       .then((data) => setMessage(data.message))
       .catch(console.error);
