@@ -13,6 +13,7 @@ import RefreshTokenDemo from "./examples/refresh-token/refresh-token-demo";
 import RefreshTokenChallenge from "./examples/refresh-token-challenge/refresh-token-challenge";
 import DFSWordSearch from "./algo-visualizers/WordSearchVisualizer";
 import IdeaGenerator from "./examples/idea-generator";
+import EcommerceSecurityDemo from "./examples/fe-security/e-commerce";
 
 // ABCCED
 const board = [
@@ -34,6 +35,7 @@ const demos: Record<string, JSX.Element> = {
   "Refresh Token Demo": <RefreshTokenDemo />,
   "DFS Word Search": <DFSWordSearch board={board} word="ABCCED" />,
   "Idea Generator": <IdeaGenerator />,
+  "E-commerce Security": <EcommerceSecurityDemo />,
 };
 
 function App() {
