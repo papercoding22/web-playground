@@ -11,7 +11,7 @@ import ListView from "./examples/list-view";
 import ListViewSolution from "./examples/list-view-solution";
 import RefreshTokenDemo from "./examples/refresh-token/refresh-token-demo";
 import RefreshTokenChallenge from "./examples/refresh-token-challenge/refresh-token-challenge";
-import DFSWordSearch from "./examples/dfs-word-search";
+import DFSWordSearch from "./algo-visualizers/WordSearchVisualizer";
 import IdeaGenerator from "./examples/idea-generator";
 
 // ABCCED
