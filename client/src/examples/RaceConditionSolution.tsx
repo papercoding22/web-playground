@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { fakeGetName } from "../utils/fakeApis";
 
-const RaceConditionExampleSolution = () => {
+const RaceConditionSolution = () => {
   const [input, setInput] = React.useState("");
   const [guest, setGuest] = React.useState("");
   const [log, setLog] = React.useState<string[]>([]);
@@ -72,4 +72,4 @@ const RaceConditionExampleSolution = () => {
   );
 };
 
-export default RaceConditionExampleSolution;
+export default RaceConditionSolution;

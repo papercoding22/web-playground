@@ -1,7 +1,7 @@
 import { useEffect, useState, type JSX } from "react";
 import "./App.css";
 import RaceConditionProblem from "./examples/RaceConditionProblem";
-import RaceConditionSolution from "./examples/race-condition-solution";
+import RaceConditionSolution from "./examples/RaceConditionSolution";
 import CapturedPropsChange from "./examples/captured-props-demo";
 import StaleClosureDemo from "./examples/stale-closure-demo";
 import StaleClosureDemoSolution from "./examples/stale-clousre-demo-solution";
