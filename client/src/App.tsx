@@ -12,7 +12,6 @@ import RefreshTokenDemo from "./examples/refresh-token/refresh-token-demo";
 import RefreshTokenChallenge from "./examples/refresh-token-challenge/refresh-token-challenge";
 import DFSWordSearch from "./algo-visualizers/WordSearchVisualizer";
 import IdeaGenerator from "./examples/idea-generator";
-import EcommerceSecurityDemo from "./examples/fe-security/e-commerce";
 
 // ABCCED
 const board = [
@@ -34,7 +33,6 @@ const demos: Record<string, JSX.Element> = {
   "Refresh Token Demo": <RefreshTokenDemo />,
   "DFS Word Search": <DFSWordSearch board={board} word="ABCCED" />,
   "Idea Generator": <IdeaGenerator />,
-  "E-commerce Security": <EcommerceSecurityDemo />,
 };
 
 function App() {
@@ -58,13 +56,6 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
-        <div className="absolute top-40 left-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
-      </div>
-
       {/* Main content */}
       <div className="relative z-10 container mx-auto px-4 py-8">
         {/* Header */}
