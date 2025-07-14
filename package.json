@@ -1,0 +1,10 @@
+{
+  "name": "web-playground",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently \"yarn --cwd client dev\" \"yarn --cwd server dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  }
+}
