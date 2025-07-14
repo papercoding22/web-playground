@@ -1,7 +1,7 @@
 import { useEffect, useState, type JSX } from "react";
 import "./App.css";
-import RaceConditionExample from "./examples/race-condition";
-import RaceConditionExampleSolution from "./examples/race-condition-solution";
+import RaceConditionProblem from "./examples/RaceConditionProblem";
+import RaceConditionSolution from "./examples/race-condition-solution";
 import CapturedPropsChange from "./examples/captured-props-demo";
 import StaleClosureDemo from "./examples/stale-closure-demo";
 import StaleClosureDemoSolution from "./examples/stale-clousre-demo-solution";
@@ -20,8 +20,8 @@ const board = [
 ];
 
 const demos: Record<string, JSX.Element> = {
-  "Race Condition": <RaceConditionExample />,
-  "Race Condition Solution": <RaceConditionExampleSolution />,
+  "Race Condition": <RaceConditionProblem />,
+  "Race Condition Solution": <RaceConditionSolution />,
   "Stale Closure": <StaleClosureDemo />,
   "Stale Closure Solution": <StaleClosureDemoSolution />,
   "Captured Props Change": <CapturedPropsChange />,
