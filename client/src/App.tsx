@@ -11,7 +11,6 @@ import ListViewSolution from "./examples/list-view-solution";
 import RefreshTokenDemo from "./examples/refresh-token/refresh-token-demo";
 import RefreshTokenChallenge from "./examples/refresh-token-challenge/refresh-token-challenge";
 import DFSWordSearch from "./algo-visualizers/WordSearchVisualizer";
-import IdeaGenerator from "./examples/idea-generator";
 
 // ABCCED
 const board = [
@@ -32,7 +31,6 @@ const demos: Record<string, JSX.Element> = {
   "Refresh Token Challenge": <RefreshTokenChallenge />,
   "Refresh Token Demo": <RefreshTokenDemo />,
   "DFS Word Search": <DFSWordSearch board={board} word="ABCCED" />,
-  "Idea Generator": <IdeaGenerator />,
 };
 
 function App() {
