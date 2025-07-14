@@ -12,6 +12,7 @@ import RefreshTokenDemo from "./examples/refresh-token/refresh-token-demo";
 import RefreshTokenChallenge from "./examples/refresh-token-challenge/refresh-token-challenge";
 import DFSWordSearch from "./algo-visualizers/WordSearchVisualizer";
 import MoveZeroes from "./algo-visualizers/MoveZeroes";
+import SOPCSRFDemo from "./examples/fe-security/SOPCSRFDemo";
 
 const demos: Record<string, JSX.Element> = {
   "Race Condition": <RaceConditionProblem />,
@@ -26,6 +27,7 @@ const demos: Record<string, JSX.Element> = {
   "Refresh Token Demo": <RefreshTokenDemo />,
   "DFS Word Search": <DFSWordSearch />,
   "Move Zeroes": <MoveZeroes />,
+  "SOP/CSRF Demo": <SOPCSRFDemo />,
 };
 
 function App() {
