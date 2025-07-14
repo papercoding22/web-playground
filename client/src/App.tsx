@@ -1,5 +1,5 @@
 import { useState, type JSX } from "react";
-import "./App.css";
+
 import RaceConditionProblem from "./examples/RaceConditionProblem";
 import RaceConditionSolution from "./examples/RaceConditionSolution";
 import CapturedPropsChange from "./examples/CapturedPropsProblem";
@@ -12,13 +12,6 @@ import RefreshTokenDemo from "./examples/refresh-token/refresh-token-demo";
 import RefreshTokenChallenge from "./examples/refresh-token-challenge/refresh-token-challenge";
 import DFSWordSearch from "./algo-visualizers/WordSearchVisualizer";
 
-// ABCCED
-const board = [
-  ["A", "D", "E", "E"],
-  ["S", "F", "C", "S"],
-  ["A", "B", "C", "E"],
-];
-
 const demos: Record<string, JSX.Element> = {
   "Race Condition": <RaceConditionProblem />,
   "Race Condition Solution": <RaceConditionSolution />,
@@ -30,7 +23,7 @@ const demos: Record<string, JSX.Element> = {
   "List View Solution": <ListViewSolution />,
   "Refresh Token Challenge": <RefreshTokenChallenge />,
   "Refresh Token Demo": <RefreshTokenDemo />,
-  "DFS Word Search": <DFSWordSearch board={board} word="ABCCED" />,
+  "DFS Word Search": <DFSWordSearch />,
 };
 
 function App() {
