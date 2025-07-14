@@ -1,4 +1,4 @@
-import { useEffect, useState, type JSX } from "react";
+import { useState, type JSX } from "react";
 import "./App.css";
 import RaceConditionProblem from "./examples/RaceConditionProblem";
 import RaceConditionSolution from "./examples/RaceConditionSolution";
@@ -35,22 +35,6 @@ const demos: Record<string, JSX.Element> = {
 
 function App() {
   const [selectedDemo, setSelectedDemo] = useState("");
-  const [message, setMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("http://localhost:5000/api/hello")
-      .then((res) => res.json())
-      .then((data) => {
-        setMessage(data.message);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setMessage("Welcome to React Demo Playground! 🚀");
-        setIsLoading(false);
-      });
-  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -62,21 +46,9 @@ function App() {
             React Demo
           </h1>
           <div className="h-8 flex items-center justify-center">
-            {isLoading ? (
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
-                <div
-                  className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"
-                  style={{ animationDelay: "0.2s" }}
-                ></div>
-                <div
-                  className="w-2 h-2 bg-pink-400 rounded-full animate-bounce"
-                  style={{ animationDelay: "0.4s" }}
-                ></div>
-              </div>
-            ) : (
-              <p className="text-xl text-gray-300">{message}</p>
-            )}
+            <p className="text-xl text-gray-300">
+              {"Welcome to React Demo Playground! 🚀"}
+            </p>
           </div>
         </div>
 
