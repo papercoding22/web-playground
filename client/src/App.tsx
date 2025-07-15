@@ -14,6 +14,7 @@ import DFSWordSearch from "./algo-visualizers/WordSearchVisualizer";
 import MoveZeroes from "./algo-visualizers/MoveZeroes";
 import SOPCSRFDemo from "./examples/fe-security/SOPCSRFDemo";
 import XSSDemo from "./examples/fe-security/XSSDemo";
+import HTTPSDemo from "./examples/fe-security/HTTPSDemo";
 
 const demos: Record<string, JSX.Element> = {
   "Race Condition": <RaceConditionProblem />,
@@ -30,6 +31,7 @@ const demos: Record<string, JSX.Element> = {
   "Move Zeroes": <MoveZeroes />,
   "SOP/CSRF Demo": <SOPCSRFDemo />,
   "XSS Demo": <XSSDemo />,
+  "HTTPS Demo": <HTTPSDemo />,
 };
 
 function App() {
