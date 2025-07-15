@@ -16,6 +16,7 @@ import SOPCSRFDemo from "./examples/fe-security/SOPCSRFDemo";
 import XSSDemo from "./examples/fe-security/XSSDemo";
 import HTTPSDemo from "./examples/fe-security/HTTPSDemo";
 import ClosureDemo from "./examples/JSClosureDemo";
+import DebouncedSearchDemo from "./examples/DebouncedSearchDemo";
 
 const demos: Record<string, JSX.Element> = {
   "Race Condition": <RaceConditionProblem />,
@@ -34,6 +35,7 @@ const demos: Record<string, JSX.Element> = {
   "XSS Demo": <XSSDemo />,
   "HTTPS Demo": <HTTPSDemo />,
   "JS Closure Demo": <ClosureDemo />,
+  "Debounced Search": <DebouncedSearchDemo />,
 };
 
 function App() {
