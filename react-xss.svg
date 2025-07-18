@@ -1,0 +1,174 @@
+<svg viewBox="0 0 1000 900" xmlns="http://www.w3.org/2000/svg">
+	<!-- Background -->
+	<rect width="1000" height="900" fill="#f8fafc" />
+
+	<!-- Title -->
+	<text x="500" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#1e293b">
+		React $$typeof Security - Attack Sequence Diagram
+	</text>
+
+	<!-- Actors/Participants -->
+	<!-- Attacker -->
+	<g>
+		<rect x="50" y="60" width="120" height="60" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2" />
+		<text x="110" y="85" text-anchor="middle" font-size="14" font-weight="bold" fill="#dc2626">🏴‍☠️ Attacker</text>
+		<text x="110" y="105" text-anchor="middle" font-size="10" fill="#7f1d1d">Malicious User</text>
+	</g>
+
+	<!-- Server -->
+	<g>
+		<rect x="300" y="60" width="120" height="60" rx="8" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="2" />
+		<text x="360" y="85" text-anchor="middle" font-size="14" font-weight="bold" fill="#0ea5e9">🌐 Server</text>
+		<text x="360" y="105" text-anchor="middle" font-size="10" fill="#075985">API/Database</text>
+	</g>
+
+	<!-- Database -->
+	<g>
+		<rect x="550" y="60" width="120" height="60" rx="8" fill="#f3f4f6" stroke="#6b7280" stroke-width="2" />
+		<text x="610" y="85" text-anchor="middle" font-size="14" font-weight="bold" fill="#374151">🗄️ Database</text>
+		<text x="610" y="105" text-anchor="middle" font-size="10" fill="#374151">Storage</text>
+	</g>
+
+	<!-- React App -->
+	<g>
+		<rect x="800" y="60" width="120" height="60" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" />
+		<text x="860" y="85" text-anchor="middle" font-size="14" font-weight="bold" fill="#16a34a">⚛️ React App</text>
+		<text x="860" y="105" text-anchor="middle" font-size="10" fill="#15803d">Client</text>
+	</g>
+
+	<!-- Lifelines -->
+	<line x1="110" y1="120" x2="110" y2="850" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5" />
+	<line x1="360" y1="120" x2="360" y2="850" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5" />
+	<line x1="610" y1="120" x2="610" y2="850" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5" />
+	<line x1="860" y1="120" x2="860" y2="850" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5" />
+
+	<!-- Sequence Steps -->
+
+	<!-- Step 1: Attacker creates malicious JSON -->
+	<g>
+		<rect x="20" y="150" width="180" height="80" rx="5" fill="#fef2f2" stroke="#dc2626" stroke-width="1" />
+		<text x="110" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#dc2626">1. Create Malicious
+			JSON</text>
+		<text x="110" y="185" text-anchor="middle" font-size="9" fill="#991b1b">{</text>
+		<text x="110" y="195" text-anchor="middle" font-size="9" fill="#991b1b">"type": "div",</text>
+		<text x="110" y="205" text-anchor="middle" font-size="9" fill="#991b1b">"$$typeof": "Symbol(...)",</text>
+		<text x="110" y="215" text-anchor="middle" font-size="9" fill="#991b1b">"props": {XSS payload}</text>
+		<text x="110" y="225" text-anchor="middle" font-size="9" fill="#991b1b">}</text>
+	</g>
+
+	<!-- Step 2: Submit to server -->
+	<g>
+		<path d="M 110 250 L 350 250" stroke="#dc2626" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+		<rect x="180" y="235" width="120" height="30" rx="3" fill="#fff" stroke="#dc2626" stroke-width="1" />
+		<text x="240" y="250" text-anchor="middle" font-size="11" fill="#dc2626">2. POST /api/content</text>
+		<text x="240" y="260" text-anchor="middle" font-size="9" fill="#7f1d1d">Submit malicious JSON</text>
+	</g>
+
+	<!-- Step 3: Server parses JSON -->
+	<g>
+		<rect x="270" y="280" width="180" height="60" rx="5" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1" />
+		<text x="360" y="300" text-anchor="middle" font-size="12" font-weight="bold" fill="#0c4a6e">3.
+			JSON.parse(request)</text>
+		<text x="360" y="315" text-anchor="middle" font-size="10" fill="#0c4a6e">$$typeof becomes:</text>
+		<text x="360" y="330" text-anchor="middle" font-size="10" font-weight="bold" fill="#dc2626">"Symbol(...)" ←
+			STRING!</text>
+	</g>
+
+	<!-- Step 4: Store to database -->
+	<g>
+		<path d="M 360 360 L 600 360" stroke="#0ea5e9" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+		<rect x="430" y="345" width="120" height="30" rx="3" fill="#fff" stroke="#0ea5e9" stroke-width="1" />
+		<text x="490" y="360" text-anchor="middle" font-size="11" fill="#0ea5e9">4. Store Data</text>
+		<text x="490" y="370" text-anchor="middle" font-size="9" fill="#075985">Save parsed object</text>
+	</g>
+
+	<!-- Step 5: Database stores -->
+	<g>
+		<rect x="520" y="390" width="180" height="50" rx="5" fill="#f9fafb" stroke="#6b7280" stroke-width="1" />
+		<text x="610" y="410" text-anchor="middle" font-size="12" font-weight="bold" fill="#374151">5. Data Stored</text>
+		<text x="610" y="425" text-anchor="middle" font-size="10" fill="#6b7280">$$typeof still a string</text>
+	</g>
+
+	<!-- Step 6: React requests data -->
+	<g>
+		<path d="M 860 470 L 370 470" stroke="#16a34a" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+		<rect x="565" y="455" width="150" height="30" rx="3" fill="#fff" stroke="#16a34a" stroke-width="1" />
+		<text x="640" y="470" text-anchor="middle" font-size="11" fill="#16a34a">6. GET /api/content</text>
+		<text x="640" y="480" text-anchor="middle" font-size="9" fill="#15803d">Request user content</text>
+	</g>
+
+	<!-- Step 7: Server fetches from DB -->
+	<g>
+		<path d="M 360 500 L 600 500" stroke="#0ea5e9" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+		<rect x="430" y="485" width="120" height="30" rx="3" fill="#fff" stroke="#0ea5e9" stroke-width="1" />
+		<text x="490" y="500" text-anchor="middle" font-size="11" fill="#0ea5e9">7. Fetch Data</text>
+		<text x="490" y="510" text-anchor="middle" font-size="9" fill="#075985">Retrieve stored data</text>
+	</g>
+
+	<!-- Step 8: DB returns data -->
+	<g>
+		<path d="M 600 530 L 370 530" stroke="#6b7280" stroke-width="2" fill="none" marker-end="url(#arrowhead)"
+			stroke-dasharray="3,3" />
+		<rect x="430" y="515" width="120" height="30" rx="3" fill="#fff" stroke="#6b7280" stroke-width="1" />
+		<text x="490" y="530" text-anchor="middle" font-size="11" fill="#6b7280">8. Return Data</text>
+		<text x="490" y="540" text-anchor="middle" font-size="9" fill="#6b7280">Object with string $$typeof</text>
+	</g>
+
+	<!-- Step 9: Server responds with JSON -->
+	<g>
+		<path d="M 360 560 L 850 560" stroke="#0ea5e9" stroke-width="2" fill="none" marker-end="url(#arrowhead)"
+			stroke-dasharray="3,3" />
+		<rect x="555" y="545" width="150" height="30" rx="3" fill="#fff" stroke="#0ea5e9" stroke-width="1" />
+		<text x="630" y="560" text-anchor="middle" font-size="11" fill="#0ea5e9">9. JSON Response</text>
+		<text x="630" y="570" text-anchor="middle" font-size="9" fill="#075985">Send JSON to client</text>
+	</g>
+
+	<!-- Step 10: React parses JSON -->
+	<g>
+		<rect x="770" y="590" width="180" height="60" rx="5" fill="#f0fdf4" stroke="#16a34a" stroke-width="1" />
+		<text x="860" y="610" text-anchor="middle" font-size="12" font-weight="bold" fill="#15803d">10.
+			response.json()</text>
+		<text x="860" y="625" text-anchor="middle" font-size="10" fill="#15803d">$$typeof still:</text>
+		<text x="860" y="640" text-anchor="middle" font-size="10" font-weight="bold" fill="#dc2626">"Symbol(...)" ←
+			STRING!</text>
+	</g>
+
+	<!-- Step 11: React Security Check -->
+	<g>
+		<rect x="770" y="670" width="180" height="100" rx="5" fill="#fefce8" stroke="#eab308" stroke-width="2" />
+		<text x="860" y="690" text-anchor="middle" font-size="12" font-weight="bold" fill="#a16207">11. Security
+			Check</text>
+		<text x="860" y="705" text-anchor="middle" font-size="10" fill="#92400e">if ($$typeof === Symbol)</text>
+		<text x="860" y="720" text-anchor="middle" font-size="10" fill="#dc2626">"Symbol(...)" === Symbol</text>
+		<text x="860" y="735" text-anchor="middle" font-size="10" font-weight="bold" fill="#dc2626">STRING ≠ SYMBOL</text>
+		<text x="860" y="750" text-anchor="middle" font-size="10" font-weight="bold" fill="#dc2626">= FALSE ❌</text>
+		<text x="860" y="765" text-anchor="middle" font-size="10" font-weight="bold" fill="#dc2626">BLOCK ATTACK! 🛡️</text>
+	</g>
+
+	<!-- Result Box -->
+	<g>
+		<rect x="50" y="800" width="900" height="40" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2" />
+		<text x="500" y="820" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">
+			🚫 ATTACK BLOCKED: Malicious object rejected due to invalid $$typeof (string ≠ Symbol)
+		</text>
+		<text x="500" y="835" text-anchor="middle" font-size="12" fill="#7f1d1d">
+			XSS prevention successful! JSON cannot create real Symbols 🎉
+		</text>
+	</g>
+
+	<!-- Legend -->
+	<g>
+		<rect x="50" y="860" width="900" height="30" rx="5" fill="#f1f5f9" stroke="#64748b" stroke-width="1" />
+		<text x="500" y="875" text-anchor="middle" font-size="12" fill="#334155">
+			🎯 Key: Solid arrows = Request | Dashed arrows = Response | The $$typeof value remains a string throughout the
+			entire journey
+		</text>
+	</g>
+
+	<!-- Arrow marker -->
+	<defs>
+		<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+			<polygon points="0 0, 10 3.5, 0 7" fill="#374151" />
+		</marker>
+	</defs>
+</svg>
