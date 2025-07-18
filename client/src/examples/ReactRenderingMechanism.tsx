@@ -36,11 +36,41 @@ const customRenderer = (element: React.ReactElement) => {
 
 const RenderingMechanism: React.FC = () => {
   const [showDemo, setShowDemo] = useState(false);
+  const [showJSON, setShowJSON] = useState(false);
 
   // Create an element (Phase 1)
   const element = (
     <TrackedComponent name="Demo Component" color="bg-blue-100" />
   );
+
+  // Function to safely stringify the element for display
+  const getElementJSON = () => {
+    try {
+      // Create a simplified version for display
+      const simplifiedElement = {
+        type: element.type.name || element.type.toString(),
+        props: element.props,
+        key: element.key,
+        ref: element.ref,
+        $typeof: element.$typeof?.toString(),
+        _owner: element._owner ? "React Internal" : null,
+        _store: element._store ? "React Internal" : null,
+      };
+
+      return JSON.stringify(simplifiedElement, null, 2);
+    } catch (error) {
+      return "Unable to stringify - contains non-serializable properties";
+    }
+  };
+
+  const handleShowJSON = () => {
+    setShowJSON(true);
+    console.log("🔍 Raw element object:", element);
+    console.log("📋 Element properties:", Object.getOwnPropertyNames(element));
+    console.log("📋 Element keys:", Object.keys(element));
+    console.log("🏷️ Element type:", typeof element.type);
+    console.log("🏷️ Element type name:", element.type.name);
+  };
 
   return (
     <div className="max-w-5xl mx-auto p-8 bg-gradient-to-br from-indigo-50 to-purple-50 min-h-screen">
@@ -118,13 +148,90 @@ const RenderingMechanism: React.FC = () => {
             elements!
           </p>
 
-          <button
-            onClick={() => setShowDemo(!showDemo)}
-            className="px-6 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors"
-          >
-            {showDemo ? "Hide" : "Show"} Rendering Process
-          </button>
+          <div className="flex flex-wrap gap-4">
+            <button
+              onClick={() => setShowDemo(!showDemo)}
+              className="px-6 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors"
+            >
+              {showDemo ? "Hide" : "Show"} Rendering Process
+            </button>
+
+            <button
+              onClick={handleShowJSON}
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            >
+              🔍 Inspect Element Object
+            </button>
+          </div>
         </div>
+
+        {/* JSON Display */}
+        {showJSON && (
+          <div className="bg-gradient-to-r from-slate-50 to-zinc-50 p-6 rounded-lg border-l-4 border-slate-500 mb-6">
+            <h4 className="text-xl font-semibold text-slate-800 mb-4">
+              📋 Element Object Structure
+            </h4>
+            <p className="text-slate-600 mb-4">
+              Here's the actual structure of the React element object (check
+              console for raw object):
+            </p>
+            <pre className="bg-black text-green-400 p-4 rounded-lg overflow-x-auto text-sm font-mono">
+              {getElementJSON()}
+            </pre>
+
+            <div className="mt-4 grid md:grid-cols-2 gap-4">
+              <div className="bg-white p-4 rounded-lg border">
+                <h5 className="font-semibold text-gray-800 mb-2">
+                  🔑 Key Properties:
+                </h5>
+                <ul className="text-sm space-y-1 text-gray-700">
+                  <li>
+                    <code className="bg-gray-100 px-2 py-1 rounded">type</code>:
+                    The component function
+                  </li>
+                  <li>
+                    <code className="bg-gray-100 px-2 py-1 rounded">props</code>
+                    : Data passed to component
+                  </li>
+                  <li>
+                    <code className="bg-gray-100 px-2 py-1 rounded">
+                      $typeof
+                    </code>
+                    : Security identifier
+                  </li>
+                  <li>
+                    <code className="bg-gray-100 px-2 py-1 rounded">key</code>:
+                    For list rendering
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-white p-4 rounded-lg border">
+                <h5 className="font-semibold text-gray-800 mb-2">
+                  🔒 Internal Properties:
+                </h5>
+                <ul className="text-sm space-y-1 text-gray-700">
+                  <li>
+                    <code className="bg-gray-100 px-2 py-1 rounded">
+                      _owner
+                    </code>
+                    : Parent component info
+                  </li>
+                  <li>
+                    <code className="bg-gray-100 px-2 py-1 rounded">
+                      _store
+                    </code>
+                    : Development tools
+                  </li>
+                  <li>
+                    <code className="bg-gray-100 px-2 py-1 rounded">ref</code>:
+                    Direct DOM reference
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
 
         {showDemo && (
           <div className="space-y-6">
