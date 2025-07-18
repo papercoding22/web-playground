@@ -18,6 +18,8 @@ import HTTPSDemo from "./examples/fe-security/HTTPSDemo";
 import ClosureDemo from "./examples/JSClosureDemo";
 import DebouncedSearchDemo from "./examples/DebouncedSearchDemo";
 import ReactElementExperiment from "./examples/ReactElementExperiment";
+import ReactPhaseExperiment from "./examples/ReactPhaseExperiment";
+import RenderingMechanism from "./examples/ReactRenderingMechanism";
 
 const demos: Record<string, JSX.Element> = {
   "Race Condition": <RaceConditionProblem />,
@@ -38,6 +40,8 @@ const demos: Record<string, JSX.Element> = {
   "JS Closure Demo": <ClosureDemo />,
   "Debounced Search": <DebouncedSearchDemo />,
   "React Element Experiment": <ReactElementExperiment />,
+  "React Phase Experiment": <ReactPhaseExperiment />,
+  "React Rendering Mechanism": <RenderingMechanism />,
 };
 
 function App() {
