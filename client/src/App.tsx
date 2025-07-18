@@ -20,6 +20,7 @@ import DebouncedSearchDemo from "./examples/DebouncedSearchDemo";
 import ReactElementExperiment from "./examples/ReactElementExperiment";
 import ReactPhaseExperiment from "./examples/ReactPhaseExperiment";
 import RenderingMechanism from "./examples/ReactRenderingMechanism";
+import InspectReactElementDemo from "./examples/InspectReactElementObject";
 
 const demos: Record<string, JSX.Element> = {
   "Race Condition": <RaceConditionProblem />,
@@ -42,6 +43,7 @@ const demos: Record<string, JSX.Element> = {
   "React Element Experiment": <ReactElementExperiment />,
   "React Phase Experiment": <ReactPhaseExperiment />,
   "React Rendering Mechanism": <RenderingMechanism />,
+  "Inspect React Element": <InspectReactElementDemo />,
 };
 
 function App() {
