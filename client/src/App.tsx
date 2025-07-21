@@ -23,6 +23,7 @@ import RenderingMechanism from "./examples/ReactRenderingMechanism";
 import InspectReactElementDemo from "./examples/InspectReactElementObject";
 import JSONSymbolExperiment from "./examples/ReactSymbolExperiment";
 import RealisticXSSScenario from "./examples/ReactXSS";
+import DOMConstructionDemo from "./examples/DOMConstructionDemo";
 
 const demos: Record<string, JSX.Element> = {
   "Race Condition": <RaceConditionProblem />,
@@ -48,6 +49,7 @@ const demos: Record<string, JSX.Element> = {
   "Inspect React Element": <InspectReactElementDemo />,
   "React Symbol Experiment": <JSONSymbolExperiment />,
   "React XSS Scenario": <RealisticXSSScenario />,
+  "DOM Contrusction Demo": <DOMConstructionDemo />,
 };
 
 function App() {
