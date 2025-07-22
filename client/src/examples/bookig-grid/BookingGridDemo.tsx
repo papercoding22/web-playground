@@ -24,6 +24,13 @@ interface CacheEntry {
   ttl: number;
 }
 
+interface BookingUpdate {
+  type: "booking_created" | "booking_cancelled" | "resource_unavailable";
+  affectedWeeks: string[];
+  resourceId?: string;
+  timestamp: number;
+}
+
 // Mock resources
 const MOCK_RESOURCES = [
   { id: "res-1", name: "John Smith", type: "Engineer" },
@@ -81,8 +88,83 @@ class LocalCache {
   }
 }
 
+// WebSocket simulation
+class MockWebSocket {
+  private listeners: Array<(update: BookingUpdate) => void> = [];
+  private intervalId: NodeJS.Timeout | null = null;
+
+  connect() {
+    // Simulate random booking updates every 10-15 seconds
+    this.intervalId = setInterval(() => {
+      this.simulateBookingUpdate();
+    }, 10000 + Math.random() * 5000);
+  }
+
+  disconnect() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+  }
+
+  onBookingUpdate(callback: (update: BookingUpdate) => void) {
+    this.listeners.push(callback);
+  }
+
+  removeListener(callback: (update: BookingUpdate) => void) {
+    this.listeners = this.listeners.filter((listener) => listener !== callback);
+  }
+
+  private simulateBookingUpdate() {
+    const updateTypes: BookingUpdate["type"][] = [
+      "booking_created",
+      "booking_cancelled",
+      "resource_unavailable",
+    ];
+    const randomType =
+      updateTypes[Math.floor(Math.random() * updateTypes.length)];
+
+    // Generate random affected weeks (current week + nearby weeks)
+    const today = new Date();
+    const affectedWeeks = [];
+    for (let i = 0; i < Math.floor(Math.random() * 3) + 1; i++) {
+      const weekDate = new Date(today);
+      weekDate.setDate(today.getDate() + i * 7);
+      affectedWeeks.push(getWeekStart(weekDate));
+    }
+
+    const update: BookingUpdate = {
+      type: randomType,
+      affectedWeeks,
+      resourceId:
+        MOCK_RESOURCES[Math.floor(Math.random() * MOCK_RESOURCES.length)].id,
+      timestamp: Date.now(),
+    };
+
+    this.listeners.forEach((listener) => listener(update));
+  }
+
+  // Manual trigger for demo purposes
+  triggerUpdate(type: BookingUpdate["type"]) {
+    const today = new Date();
+    const currentWeekStart = getWeekStart(today);
+
+    const update: BookingUpdate = {
+      type,
+      affectedWeeks: [currentWeekStart],
+      resourceId: MOCK_RESOURCES[0].id,
+      timestamp: Date.now(),
+    };
+
+    this.listeners.forEach((listener) => listener(update));
+  }
+}
+
 // Global cache instance
 const cache = new LocalCache();
+
+// Global WebSocket instance
+const mockWS = new MockWebSocket();
 
 // Fake API simulation
 const fakeAPI = {
@@ -205,6 +287,9 @@ export default function BookingGridDemo() {
     size: 0,
     keys: [] as string[],
   });
+  const [wsConnected, setWsConnected] = useState(false);
+  const [lastUpdate, setLastUpdate] = useState<BookingUpdate | null>(null);
+  const [autoRefreshEnabled, setAutoRefreshEnabled] = useState(true);
 
   const fetchData = useCallback(async () => {
     const startTime = Date.now();
@@ -240,6 +325,35 @@ export default function BookingGridDemo() {
     }
   }, [currentWeek, selectedResources]);
 
+  // WebSocket effect for real-time updates
+  useEffect(() => {
+    const handleBookingUpdate = (update: BookingUpdate) => {
+      setLastUpdate(update);
+
+      // Invalidate cache for affected weeks
+      update.affectedWeeks.forEach((week) => {
+        cache.invalidate(`booking-grid:${week}`);
+      });
+
+      setCacheStats(cache.getStats());
+
+      // Auto-refresh current view if affected and enabled
+      if (autoRefreshEnabled && update.affectedWeeks.includes(currentWeek)) {
+        fetchData();
+      }
+    };
+
+    mockWS.onBookingUpdate(handleBookingUpdate);
+    mockWS.connect();
+    setWsConnected(true);
+
+    return () => {
+      mockWS.removeListener(handleBookingUpdate);
+      mockWS.disconnect();
+      setWsConnected(false);
+    };
+  }, [currentWeek, autoRefreshEnabled, fetchData]);
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -260,6 +374,40 @@ export default function BookingGridDemo() {
   const clearCache = () => {
     cache.invalidate("booking-grid");
     setCacheStats(cache.getStats());
+  };
+
+  const preloadWeeks = async () => {
+    setLoading(true);
+    const currentWeekDate = new Date(currentWeek + "T00:00:00");
+    const weeksToPreload = [];
+
+    // Preload current week + 2 weeks before and 2 weeks after
+    for (let i = -2; i <= 2; i++) {
+      const weekDate = new Date(currentWeekDate);
+      weekDate.setDate(weekDate.getDate() + i * 7);
+      weeksToPreload.push(weekDate.toISOString().split("T")[0]);
+    }
+
+    try {
+      // Load all weeks in parallel
+      await Promise.all(
+        weeksToPreload.map((week) =>
+          apiService.getBookingGrid({
+            weekStart: week,
+            resourceIds: selectedResources,
+          })
+        )
+      );
+      setCacheStats(cache.getStats());
+    } catch (error) {
+      console.error("Failed to preload weeks:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const triggerManualUpdate = (type: BookingUpdate["type"]) => {
+    mockWS.triggerUpdate(type);
   };
 
   // Group time slots by day and time
