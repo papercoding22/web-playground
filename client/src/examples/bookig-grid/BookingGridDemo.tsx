@@ -182,6 +182,12 @@ const getWeekStart = (date: Date): string => {
   return d.toISOString().split("T")[0];
 };
 
+const addWeeks = (dateStr: string, weeks: number): string => {
+  const date = new Date(dateStr + "T00:00:00");
+  date.setDate(date.getDate() + weeks * 7);
+  return date.toISOString().split("T")[0];
+};
+
 export default function BookingGridDemo() {
   const [selectedResources, setSelectedResources] = useState<string[]>([
     "res-1",
@@ -247,9 +253,8 @@ export default function BookingGridDemo() {
   };
 
   const navigateWeek = (direction: "prev" | "next") => {
-    const week = new Date(currentWeek);
-    week.setDate(week.getDate() + (direction === "next" ? 7 : -7));
-    setCurrentWeek(getWeekStart(week));
+    const weeksToAdd = direction === "next" ? 1 : -1;
+    setCurrentWeek(addWeeks(currentWeek, weeksToAdd));
   };
 
   const clearCache = () => {
