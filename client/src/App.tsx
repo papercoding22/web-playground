@@ -2,10 +2,10 @@ import { useState, type JSX } from "react";
 
 import RaceConditionProblem from "./examples/RaceConditionProblem";
 import RaceConditionSolution from "./examples/RaceConditionSolution";
-import CapturedPropsChange from "./examples/CapturedPropsProblem";
+import CapturedPropsChange from "./examples/learn-react/CapturedPropsProblem";
 import StaleClosureDemo from "./examples/StaleClosureProblem";
 import StaleClosureDemoSolution from "./examples/StaleClosureDemo";
-import CapturedPropsChangeSolution from "./examples/CapturedPropsSolution";
+import CapturedPropsChangeSolution from "./examples/learn-react/CapturedPropsSolution";
 import ListView from "./examples/ListViewProblem";
 import ListViewSolution from "./examples/ListViewSolution";
 import RefreshTokenDemo from "./examples/refresh-token/refresh-token-demo";
