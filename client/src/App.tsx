@@ -15,7 +15,7 @@ import MoveZeroes from "./algo-visualizers/MoveZeroes";
 import SOPCSRFDemo from "./examples/fe-security/SOPCSRFDemo";
 import XSSDemo from "./examples/fe-security/XSSDemo";
 import HTTPSDemo from "./examples/fe-security/HTTPSDemo";
-import ClosureDemo from "./examples/JSClosureDemo";
+import ClosureDemo from "./examples/learn-react/JSClosureDemo";
 import DebouncedSearchDemo from "./examples/DebouncedSearchDemo";
 import ReactElementExperiment from "./examples/ReactElementExperiment";
 import ReactPhaseExperiment from "./examples/ReactPhaseExperiment";
