@@ -1,7 +1,7 @@
 import { useState, type JSX } from "react";
 
-import RaceConditionProblem from "./examples/RaceConditionProblem";
-import RaceConditionSolution from "./examples/RaceConditionSolution";
+import RaceConditionProblem from "./examples/learn-react/RaceConditionProblem";
+import RaceConditionSolution from "./examples/learn-react/RaceConditionSolution";
 import CapturedPropsChange from "./examples/learn-react/CapturedPropsProblem";
 import StaleClosureDemo from "./examples/StaleClosureProblem";
 import StaleClosureDemoSolution from "./examples/StaleClosureDemo";
