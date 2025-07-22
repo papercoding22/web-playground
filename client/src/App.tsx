@@ -24,6 +24,7 @@ import InspectReactElementDemo from "./examples/InspectReactElementObject";
 import JSONSymbolExperiment from "./examples/ReactSymbolExperiment";
 import RealisticXSSScenario from "./examples/ReactXSS";
 import DOMConstructionDemo from "./examples/DOMConstructionDemo";
+import BookingGridDemo from "./examples/bookig-grid/BookingGridDemo";
 
 const demos: Record<string, JSX.Element> = {
   "Race Condition": <RaceConditionProblem />,
@@ -50,6 +51,7 @@ const demos: Record<string, JSX.Element> = {
   "React Symbol Experiment": <JSONSymbolExperiment />,
   "React XSS Scenario": <RealisticXSSScenario />,
   "DOM Contrusction Demo": <DOMConstructionDemo />,
+  "Booking Grid Demo": <BookingGridDemo />,
 };
 
 function App() {
