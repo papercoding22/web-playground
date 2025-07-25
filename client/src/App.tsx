@@ -25,6 +25,7 @@ import RealisticXSSScenario from "./examples/ReactXSS";
 import DOMConstructionDemo from "./examples/DOMConstructionDemo";
 import BookingGridDemo from "./examples/bookig-grid/BookingGridDemo";
 import ShoppingCartReact from "./examples/learn-react/ShoppingCartReact";
+import ShoppingCartDOM from "./examples/learn-react/ShoppingCartDOM";
 
 const demos: Record<string, JSX.Element> = {
   "Race Condition": <RaceConditionProblem />,
@@ -52,6 +53,7 @@ const demos: Record<string, JSX.Element> = {
   "DOM Contrusction Demo": <DOMConstructionDemo />,
   "Booking Grid Demo": <BookingGridDemo />,
   "Shopping Cart React": <ShoppingCartReact />,
+  "Shopping Cart DOM": <ShoppingCartDOM />,
 };
 
 function App() {
