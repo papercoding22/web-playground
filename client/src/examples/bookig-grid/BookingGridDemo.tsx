@@ -270,6 +270,19 @@ const addWeeks = (dateStr: string, weeks: number): string => {
   return date.toISOString().split("T")[0];
 };
 
+const hours = [
+  "8 AM",
+  "9 AM",
+  "10 AM",
+  "11 AM",
+  "12 PM",
+  "1 PM",
+  "2 PM",
+  "3 PM",
+  "4 PM",
+  "5 PM",
+];
+
 export default function BookingGridDemo() {
   const [selectedResources, setSelectedResources] = useState<string[]>([
     "res-1",
@@ -423,22 +436,12 @@ export default function BookingGridDemo() {
     }, {} as Record<string, Record<string, TimeSlot>>) || {};
 
   const days = Object.keys(groupedSlots).sort();
-  const hours = [
-    "8 AM",
-    "9 AM",
-    "10 AM",
-    "11 AM",
-    "12 PM",
-    "1 PM",
-    "2 PM",
-    "3 PM",
-    "4 PM",
-    "5 PM",
-  ];
 
   return (
     <div className="p-6 max-w-7xl mx-auto bg-gray-50 min-h-screen">
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+
+        {/* TITLE */}
         <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-2">
           <Calendar className="text-blue-600" />
           Booking Grid Demo

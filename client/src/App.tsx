@@ -19,7 +19,6 @@ import ClosureDemo from "./examples/learn-react/JSClosureDemo";
 import DebouncedSearchDemo from "./examples/DebouncedSearchDemo";
 import ReactElementExperiment from "./examples/ReactElementExperiment";
 import ReactPhaseExperiment from "./examples/ReactPhaseExperiment";
-import RenderingMechanism from "./examples/ReactRenderingMechanism";
 import InspectReactElementDemo from "./examples/InspectReactElementObject";
 import JSONSymbolExperiment from "./examples/ReactSymbolExperiment";
 import RealisticXSSScenario from "./examples/ReactXSS";
@@ -46,7 +45,6 @@ const demos: Record<string, JSX.Element> = {
   "Debounced Search": <DebouncedSearchDemo />,
   "React Element Experiment": <ReactElementExperiment />,
   "React Phase Experiment": <ReactPhaseExperiment />,
-  "React Rendering Mechanism": <RenderingMechanism />,
   "Inspect React Element": <InspectReactElementDemo />,
   "React Symbol Experiment": <JSONSymbolExperiment />,
   "React XSS Scenario": <RealisticXSSScenario />,
