@@ -26,6 +26,7 @@ import DOMConstructionDemo from "./examples/DOMConstructionDemo";
 import BookingGridDemo from "./examples/bookig-grid/BookingGridDemo";
 import ShoppingCartReact from "./examples/learn-react/ShoppingCartReact";
 import ShoppingCartDOM from "./examples/learn-react/ShoppingCartDOM";
+import ReactStateDiagrams from "./examples/learn-react/ReactSetStateDiagram";
 
 const demos: Record<string, JSX.Element> = {
   "Race Condition": <RaceConditionProblem />,
@@ -54,6 +55,7 @@ const demos: Record<string, JSX.Element> = {
   "Booking Grid Demo": <BookingGridDemo />,
   "Shopping Cart React": <ShoppingCartReact />,
   "Shopping Cart DOM": <ShoppingCartDOM />,
+  "React SetState Diagrams": <ReactStateDiagrams />,
 };
 
 function App() {
