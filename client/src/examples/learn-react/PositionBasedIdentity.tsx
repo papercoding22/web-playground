@@ -244,14 +244,15 @@ export default function App() {
         </div>
       </div>
 
-      {/* Example 3: Conditional rendering with different positions */}
+      {/* Example 4: React's Smart Reconciliation */}
       <div className="bg-white rounded-lg shadow-lg p-6">
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-          📍 Example 3: Same Component, Different Positions
+          🧠 Example 4: React's Smart Reconciliation
         </h2>
         <p className="text-gray-600 mb-4">
-          When the same component type appears at different positions in the
-          tree, React treats them as different instances.
+          React is smarter than simple position-based rules! When
+          adding/removing components, React tries to preserve existing component
+          instances when possible.
         </p>
 
         <div className="mb-4">
@@ -259,8 +260,9 @@ export default function App() {
             onClick={() => setShowConditionalExample(!showConditionalExample)}
             className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded font-medium"
           >
-            Toggle Position ({showConditionalExample ? "Show Both" : "Show One"}
-            )
+            {showConditionalExample
+              ? "Hide First Component"
+              : "Show Both Components"}
           </button>
         </div>
 
@@ -268,7 +270,7 @@ export default function App() {
           {showConditionalExample && (
             <div className="border-2 border-dashed border-gray-300 p-4 rounded">
               <p className="text-sm text-gray-500 mb-2">
-                Component at position 1:
+                Component at position 1 (conditionally rendered):
               </p>
               <UserProfile userId={111} role="primary" />
             </div>
@@ -276,7 +278,8 @@ export default function App() {
 
           <div className="border-2 border-dashed border-gray-300 p-4 rounded">
             <p className="text-sm text-gray-500 mb-2">
-              Component at position {showConditionalExample ? "2" : "1"}:
+              Component at position {showConditionalExample ? "2" : "1"} (always
+              rendered):
             </p>
             <UserProfile userId={222} role="secondary" />
           </div>
@@ -284,11 +287,13 @@ export default function App() {
 
         <div className="mt-4 p-4 bg-green-50 border-l-4 border-green-400">
           <p className="text-sm text-green-800">
-            <strong>What's happening:</strong> When you toggle, the second
-            UserProfile component moves from position 1 to position 2 (or vice
-            versa). React treats this as a different component instance, so its
-            state gets reset. Try interacting with the second component before
-            toggling to see the state reset.
+            <strong>What's happening:</strong> When you toggle to show both
+            components, React doesn't unmount the userId 222 component! Instead,
+            React <strong>inserts</strong> the new userId 111 component at
+            position 1 and <strong>moves</strong> the existing userId 222
+            component to position 2, preserving its state. React recognizes the
+            component still exists and avoids unnecessary unmount/remount
+            cycles.
           </p>
         </div>
       </div>
@@ -304,6 +309,10 @@ export default function App() {
             internal state
           </li>
           <li>
+            Compare Example 1 (state preserved) vs Example 2 (state reset with
+            key)
+          </li>
+          <li>
             Toggle between different examples and observe what happens to the
             state
           </li>
@@ -311,7 +320,8 @@ export default function App() {
             Open your browser's console to see component mount/unmount logs
           </li>
           <li>
-            Notice how Example 1 preserves state while Examples 2 and 3 reset it
+            Notice how Examples 2, 3, and 4 reset state while Example 1
+            preserves it
           </li>
         </ol>
 
@@ -319,7 +329,9 @@ export default function App() {
           <p className="text-sm text-blue-800">
             <strong>Key Takeaway:</strong> React's reconciliation algorithm uses
             component position and type to determine whether to preserve or
-            reset component state. Same type + same position = preserved state!
+            reset component state. The key prop gives you explicit control over
+            this behavior - same type + same position + different key = reset
+            state!
           </p>
         </div>
       </div>
