@@ -1,106 +1,327 @@
-import { useState, type JSX } from "react";
+import { useState, Suspense, lazy, type JSX } from "react";
 
-import RaceConditionProblem from "./examples/learn-react/RaceConditionProblem";
-import RaceConditionSolution from "./examples/learn-react/RaceConditionSolution";
-import CapturedPropsChange from "./examples/learn-react/CapturedPropsProblem";
-import StaleClosureDemo from "./examples/learn-react/StaleClosureProblem";
-import StaleClosureDemoSolution from "./examples/learn-react/StaleClosureDemo";
-import CapturedPropsChangeSolution from "./examples/learn-react/CapturedPropsSolution";
-import ListView from "./examples/learn-react/ListViewProblem";
-import ListViewSolution from "./examples/learn-react/ListViewSolution";
-import RefreshTokenDemo from "./examples/refresh-token/refresh-token-demo";
-import RefreshTokenChallenge from "./examples/refresh-token-challenge/refresh-token-challenge";
-import DFSWordSearch from "./algo-visualizers/WordSearchVisualizer";
-import MoveZeroes from "./algo-visualizers/MoveZeroes";
-import SOPCSRFDemo from "./examples/fe-security/SOPCSRFDemo";
-import XSSDemo from "./examples/fe-security/XSSDemo";
-import HTTPSDemo from "./examples/fe-security/HTTPSDemo";
-import ClosureDemo from "./examples/learn-react/JSClosureDemo";
-import DebouncedSearchDemo from "./examples/DebouncedSearchDemo";
-import ReactElementExperiment from "./examples/ReactElementExperiment";
-import ReactPhaseExperiment from "./examples/ReactPhaseExperiment";
-import InspectReactElementDemo from "./examples/InspectReactElementObject";
-import JSONSymbolExperiment from "./examples/ReactSymbolExperiment";
-import RealisticXSSScenario from "./examples/ReactXSS";
-import DOMConstructionDemo from "./examples/DOMConstructionDemo";
-import BookingGridDemo from "./examples/bookig-grid/BookingGridDemo";
-import ShoppingCartReact from "./examples/learn-react/ShoppingCartReact";
-import ShoppingCartDOM from "./examples/learn-react/ShoppingCartDOM";
-import { Calendar } from "./examples/calendar";
+// Code-split demos by lazy loading
+// React Concepts
+const RaceConditionProblem = lazy(
+  () => import("./examples/learn-react/RaceConditionProblem")
+);
+const RaceConditionSolution = lazy(
+  () => import("./examples/learn-react/RaceConditionSolution")
+);
+const StaleClosureDemo = lazy(
+  () => import("./examples/learn-react/StaleClosureProblem")
+);
+const StaleClosureDemoSolution = lazy(
+  () => import("./examples/learn-react/StaleClosureDemo")
+);
+const CapturedPropsChange = lazy(
+  () => import("./examples/learn-react/CapturedPropsProblem")
+);
+const CapturedPropsChangeSolution = lazy(
+  () => import("./examples/learn-react/CapturedPropsSolution")
+);
+const ListView = lazy(() => import("./examples/learn-react/ListViewProblem"));
+const ListViewSolution = lazy(
+  () => import("./examples/learn-react/ListViewSolution")
+);
+const ShoppingCartReact = lazy(
+  () => import("./examples/learn-react/ShoppingCartReact")
+);
+const ShoppingCartDOM = lazy(
+  () => import("./examples/learn-react/ShoppingCartDOM")
+);
+const PositionBasedIdentityDemo = lazy(
+  () => import("./examples/learn-react/PositionBasedIdentity")
+);
 
-const demos: Record<string, JSX.Element> = {
-  "Race Condition": <RaceConditionProblem />,
-  "Race Condition Solution": <RaceConditionSolution />,
-  "Stale Closure": <StaleClosureDemo />,
-  "Stale Closure Solution": <StaleClosureDemoSolution />,
-  "Captured Props Change": <CapturedPropsChange />,
-  "Captured Props Change Solution": <CapturedPropsChangeSolution />,
-  "List View": <ListView />,
-  "List View Solution": <ListViewSolution />,
-  "Refresh Token Challenge": <RefreshTokenChallenge />,
-  "Refresh Token Demo": <RefreshTokenDemo />,
-  "DFS Word Search": <DFSWordSearch />,
-  "Move Zeroes": <MoveZeroes />,
-  "SOP/CSRF Demo": <SOPCSRFDemo />,
-  "XSS Demo": <XSSDemo />,
-  "HTTPS Demo": <HTTPSDemo />,
-  "JS Closure Demo": <ClosureDemo />,
-  "Debounced Search": <DebouncedSearchDemo />,
-  "React Element Experiment": <ReactElementExperiment />,
-  "React Phase Experiment": <ReactPhaseExperiment />,
-  "Inspect React Element": <InspectReactElementDemo />,
-  "React Symbol Experiment": <JSONSymbolExperiment />,
-  "React XSS Scenario": <RealisticXSSScenario />,
-  "DOM Contrusction Demo": <DOMConstructionDemo />,
-  "Booking Grid Demo": <BookingGridDemo />,
-  "Shopping Cart React": <ShoppingCartReact />,
-  "Shopping Cart DOM": <ShoppingCartDOM />,
-  "Calendar View": <Calendar />,
+// React Internals
+const ReactElementExperiment = lazy(
+  () => import("./examples/ReactElementExperiment")
+);
+const ReactPhaseExperiment = lazy(
+  () => import("./examples/ReactPhaseExperiment")
+);
+const InspectReactElementDemo = lazy(
+  () => import("./examples/InspectReactElementObject")
+);
+const JSONSymbolExperiment = lazy(
+  () => import("./examples/ReactSymbolExperiment")
+);
+const DOMConstructionDemo = lazy(
+  () => import("./examples/DOMConstructionDemo")
+);
+
+// Security
+const SOPCSRFDemo = lazy(() => import("./examples/fe-security/SOPCSRFDemo"));
+const XSSDemo = lazy(() => import("./examples/fe-security/XSSDemo"));
+const HTTPSDemo = lazy(() => import("./examples/fe-security/HTTPSDemo"));
+const RealisticXSSScenario = lazy(() => import("./examples/ReactXSS"));
+
+// Authentication & Tokens
+const RefreshTokenDemo = lazy(
+  () => import("./examples/refresh-token/refresh-token-demo")
+);
+const RefreshTokenChallenge = lazy(
+  () => import("./examples/refresh-token-challenge/refresh-token-challenge")
+);
+
+// Algorithms & Visualizers
+const DFSWordSearch = lazy(
+  () => import("./algo-visualizers/WordSearchVisualizer")
+);
+const MoveZeroes = lazy(() => import("./algo-visualizers/MoveZeroes"));
+
+// JavaScript Concepts
+const ClosureDemo = lazy(() => import("./examples/learn-react/JSClosureDemo"));
+
+// Performance & Optimization
+const DebouncedSearchDemo = lazy(
+  () => import("./examples/DebouncedSearchDemo")
+);
+
+// UI Components
+const Calendar = lazy(() =>
+  import("./examples/calendar").then((module) => ({ default: module.Calendar }))
+);
+const BookingGridDemo = lazy(
+  () => import("./examples/bookig-grid/BookingGridDemo")
+);
+
+// Define demo categories with their respective demos
+interface DemoCategory {
+  name: string;
+  icon: string;
+  description: string;
+  color: string;
+  demos: Record<string, React.LazyExoticComponent<() => JSX.Element>>;
+}
+
+const demoCategories: Record<string, DemoCategory> = {
+  "React Concepts": {
+    name: "React Concepts",
+    icon: "⚛️",
+    description: "Core React patterns and state management",
+    color: "from-blue-500/20 to-cyan-500/20 border-blue-500/30",
+    demos: {
+      "Race Condition Problem": RaceConditionProblem,
+      "Race Condition Solution": RaceConditionSolution,
+      "Stale Closure Problem": StaleClosureDemo,
+      "Stale Closure Solution": StaleClosureDemoSolution,
+      "Captured Props Problem": CapturedPropsChange,
+      "Captured Props Solution": CapturedPropsChangeSolution,
+      "List View Problem": ListView,
+      "List View Solution": ListViewSolution,
+      "Position Based Identity": PositionBasedIdentityDemo,
+      "Shopping Cart (React)": ShoppingCartReact,
+      "Shopping Cart (DOM)": ShoppingCartDOM,
+    },
+  },
+  "React Internals": {
+    name: "React Internals",
+    icon: "🔍",
+    description: "Deep dive into how React works under the hood",
+    color: "from-purple-500/20 to-violet-500/20 border-purple-500/30",
+    demos: {
+      "React Element Experiment": ReactElementExperiment,
+      "React Phase Experiment": ReactPhaseExperiment,
+      "Inspect React Element": InspectReactElementDemo,
+      "React Symbol Experiment": JSONSymbolExperiment,
+      "DOM Construction Demo": DOMConstructionDemo,
+    },
+  },
+  "Frontend Security": {
+    name: "Frontend Security",
+    icon: "🔒",
+    description: "Security vulnerabilities and protection techniques",
+    color: "from-red-500/20 to-orange-500/20 border-red-500/30",
+    demos: {
+      "SOP/CSRF Demo": SOPCSRFDemo,
+      "XSS Demo": XSSDemo,
+      "HTTPS Demo": HTTPSDemo,
+      "Realistic XSS Scenario": RealisticXSSScenario,
+    },
+  },
+  Authentication: {
+    name: "Authentication",
+    icon: "🔐",
+    description: "Token management and authentication flows",
+    color: "from-green-500/20 to-emerald-500/20 border-green-500/30",
+    demos: {
+      "Refresh Token Demo": RefreshTokenDemo,
+      "Refresh Token Challenge": RefreshTokenChallenge,
+    },
+  },
+  Algorithms: {
+    name: "Algorithms",
+    icon: "🧮",
+    description: "Algorithm visualizations and problem solving",
+    color: "from-yellow-500/20 to-amber-500/20 border-yellow-500/30",
+    demos: {
+      "DFS Word Search": DFSWordSearch,
+      "Move Zeroes": MoveZeroes,
+    },
+  },
+  "JavaScript Core": {
+    name: "JavaScript Core",
+    icon: "📚",
+    description: "Fundamental JavaScript concepts and patterns",
+    color: "from-indigo-500/20 to-blue-500/20 border-indigo-500/30",
+    demos: {
+      "JS Closure Demo": ClosureDemo,
+    },
+  },
+  Performance: {
+    name: "Performance",
+    icon: "⚡",
+    description: "Optimization techniques and performance patterns",
+    color: "from-pink-500/20 to-rose-500/20 border-pink-500/30",
+    demos: {
+      "Debounced Search": DebouncedSearchDemo,
+    },
+  },
+  "UI Components": {
+    name: "UI Components",
+    icon: "🎨",
+    description: "Reusable UI components and interfaces",
+    color: "from-teal-500/20 to-cyan-500/20 border-teal-500/30",
+    demos: {
+      "Calendar View": Calendar,
+      "Booking Grid Demo": BookingGridDemo,
+    },
+  },
+};
+
+// Loading component for Suspense
+const DemoLoader = () => (
+  <div className="flex items-center justify-center py-12">
+    <div className="relative">
+      <div className="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full animate-spin"></div>
+      <div className="absolute inset-0 w-12 h-12 border-4 border-transparent border-r-pink-500 rounded-full animate-spin animation-delay-75"></div>
+    </div>
+    <span className="ml-4 text-white text-lg">Loading demo...</span>
+  </div>
+);
+
+// Error boundary for failed demo loads
+const DemoErrorBoundary = ({
+  children,
+  demoName,
+}: {
+  children: React.ReactNode;
+  demoName: string;
+}) => {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12 text-center">
+        <div className="text-6xl mb-4">😵</div>
+        <h3 className="text-xl font-semibold text-red-400 mb-2">
+          Demo Failed to Load
+        </h3>
+        <p className="text-gray-400 mb-4">
+          There was an error loading "{demoName}"
+        </p>
+        <button
+          onClick={() => setHasError(false)}
+          className="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-200 rounded-lg transition-colors duration-200 border border-purple-500/30"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
+
+  return <>{children}</>;
 };
 
 function App() {
-  const [selectedDemo, setSelectedDemo] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedDemo, setSelectedDemo] = useState<string>("");
+
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+    setSelectedDemo(""); // Reset demo selection when changing category
+  };
+
+  const handleDemoSelect = (demo: string) => {
+    setSelectedDemo(demo);
+  };
+
+  const handleBack = () => {
+    if (selectedDemo) {
+      setSelectedDemo("");
+    } else {
+      setSelectedCategory("");
+    }
+  };
+
+  const currentCategory = selectedCategory
+    ? demoCategories[selectedCategory]
+    : null;
+  const CurrentDemoComponent =
+    selectedDemo && currentCategory
+      ? currentCategory.demos[selectedDemo]
+      : null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Main content */}
       <div className="relative z-10 container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
-            React Demo
+            React Demo Playground
           </h1>
           <div className="h-8 flex items-center justify-center">
             <p className="text-xl text-gray-300">
-              {"Welcome to React Demo Playground! 🚀"}
+              Explore React concepts, patterns, and best practices 🚀
             </p>
           </div>
         </div>
 
-        {/* Demo selector */}
-        <div className="max-w-2xl mx-auto mb-8">
-          <div className="relative">
-            <select
-              value={selectedDemo}
-              onChange={(e) => setSelectedDemo(e.target.value)}
-              className="w-full px-6 py-4 text-lg bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 hover:bg-white/20 appearance-none cursor-pointer"
+        {/* Navigation Breadcrumb */}
+        {(selectedCategory || selectedDemo) && (
+          <div className="max-w-4xl mx-auto mb-8">
+            <nav className="flex items-center space-x-2 text-sm">
+              <button
+                onClick={() => {
+                  setSelectedCategory("");
+                  setSelectedDemo("");
+                }}
+                className="text-purple-400 hover:text-purple-300 transition-colors"
+              >
+                Home
+              </button>
+              {selectedCategory && (
+                <>
+                  <span className="text-gray-500">/</span>
+                  <button
+                    onClick={() => setSelectedDemo("")}
+                    className="text-purple-400 hover:text-purple-300 transition-colors"
+                  >
+                    {selectedCategory}
+                  </button>
+                </>
+              )}
+              {selectedDemo && (
+                <>
+                  <span className="text-gray-500">/</span>
+                  <span className="text-gray-300">{selectedDemo}</span>
+                </>
+              )}
+            </nav>
+          </div>
+        )}
+
+        {/* Back button */}
+        {(selectedCategory || selectedDemo) && (
+          <div className="max-w-4xl mx-auto mb-6">
+            <button
+              onClick={handleBack}
+              className="flex items-center px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors duration-200 border border-white/20"
             >
-              <option value="" className="bg-gray-800 text-white">
-                ✨ Select a demo to explore
-              </option>
-              {Object.keys(demos).map((key) => (
-                <option
-                  key={key}
-                  value={key}
-                  className="bg-gray-800 text-white"
-                >
-                  {key}
-                </option>
-              ))}
-            </select>
-            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
               <svg
-                className="w-6 h-6 text-purple-400"
+                className="w-5 h-5 mr-2"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -109,54 +330,113 @@ function App() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
+                  d="M15 19l-7-7 7-7"
                 />
               </svg>
-            </div>
+              Back
+            </button>
           </div>
-        </div>
+        )}
 
-        {/* Welcome Message if first load */}
-        {selectedDemo === "" && (
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 text-center">
-              <div className="text-6xl mb-6">🎯</div>
-              <h2 className="text-2xl font-semibold text-white mb-4">
-                Welcome to the React Playground
+        {/* Category Selection */}
+        {!selectedCategory && (
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-white mb-4">
+                Choose a Category
               </h2>
-              <p className="text-gray-300 text-lg mb-6">
-                Select a demo from the dropdown above to see how React handles
-                various concepts and patterns.
+              <p className="text-gray-300">
+                Select a category to explore related demos
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-                <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl p-4 border border-blue-500/30">
-                  <div className="text-3xl mb-2">⚡</div>
-                  <h3 className="font-semibold text-white">Performance</h3>
-                  <p className="text-sm text-gray-300">
-                    Race conditions, closures, and optimization techniques
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Object.entries(demoCategories).map(([key, category]) => (
+                <button
+                  key={key}
+                  onClick={() => handleCategorySelect(key)}
+                  className={`bg-gradient-to-r ${category.color} rounded-xl p-6 border hover:scale-105 transition-all duration-300 text-left group`}
+                >
+                  <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                    {category.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-2">
+                    {category.name}
+                  </h3>
+                  <p className="text-gray-300 text-sm mb-4">
+                    {category.description}
                   </p>
-                </div>
-                <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl p-4 border border-purple-500/30">
-                  <div className="text-3xl mb-2">🔒</div>
-                  <h3 className="font-semibold text-white">Security</h3>
-                  <p className="text-sm text-gray-300">
-                    Authentication, tokens, and secure practices
-                  </p>
-                </div>
-                <div className="bg-gradient-to-r from-pink-500/20 to-red-500/20 rounded-xl p-4 border border-pink-500/30">
-                  <div className="text-3xl mb-2">🎨</div>
-                  <h3 className="font-semibold text-white">Algorithms</h3>
-                  <p className="text-sm text-gray-300">
-                    Visualizers and interactive problem solving
-                  </p>
-                </div>
-              </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-gray-400">
+                      {Object.keys(category.demos).length} demos
+                    </span>
+                    <svg
+                      className="w-5 h-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all duration-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              ))}
             </div>
           </div>
         )}
 
-        {/* Demo content */}
-        {selectedDemo && (
+        {/* Demo Selection within Category */}
+        {selectedCategory && !selectedDemo && currentCategory && (
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-8">
+              <div className="text-5xl mb-4">{currentCategory.icon}</div>
+              <h2 className="text-3xl font-bold text-white mb-2">
+                {currentCategory.name}
+              </h2>
+              <p className="text-gray-300">{currentCategory.description}</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {Object.keys(currentCategory.demos).map((demoName) => (
+                <button
+                  key={demoName}
+                  onClick={() => handleDemoSelect(demoName)}
+                  className="bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-xl p-4 border border-white/20 text-left transition-all duration-300 hover:scale-105 group"
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white mb-1">
+                        {demoName}
+                      </h3>
+                      <p className="text-sm text-gray-400">Click to explore</p>
+                    </div>
+                    <svg
+                      className="w-5 h-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all duration-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Demo Content */}
+        {selectedDemo && CurrentDemoComponent && (
           <div className="max-w-6xl mx-auto">
             <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20">
               <div className="flex items-center justify-between mb-6">
@@ -164,16 +444,19 @@ function App() {
                   <span className="w-3 h-3 bg-green-400 rounded-full mr-3 animate-pulse"></span>
                   {selectedDemo}
                 </h2>
-                <button
-                  onClick={() => setSelectedDemo("")}
-                  className="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-200 rounded-lg transition-colors duration-200 border border-red-500/30"
-                >
-                  Close
-                </button>
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm text-gray-400 px-3 py-1 bg-white/10 rounded-full">
+                    {selectedCategory}
+                  </span>
+                </div>
               </div>
 
               <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
-                {demos[selectedDemo]}
+                <DemoErrorBoundary demoName={selectedDemo}>
+                  <Suspense fallback={<DemoLoader />}>
+                    <CurrentDemoComponent />
+                  </Suspense>
+                </DemoErrorBoundary>
               </div>
             </div>
           </div>
@@ -181,7 +464,12 @@ function App() {
 
         {/* Footer */}
         <div className="text-center mt-16 text-gray-400">
-          <p>Built with React & Tailwind CSS ✨</p>
+          <p>Built with React, TypeScript & Tailwind CSS ✨</p>
+          {selectedCategory && (
+            <p className="text-sm mt-2">
+              Demos are lazy-loaded for optimal performance 🚀
+            </p>
+          )}
         </div>
       </div>
     </div>
