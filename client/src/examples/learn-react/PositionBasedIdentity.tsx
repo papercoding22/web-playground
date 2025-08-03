@@ -105,13 +105,13 @@ const AdminProfile = ({ userId }: { userId: number }) => {
   );
 };
 
-export default function PositionBasedIdentityDemo() {
+export default function App() {
   const [isPrimary, setIsPrimary] = useState(true);
   const [showDifferentComponent, setShowDifferentComponent] = useState(false);
   const [showConditionalExample, setShowConditionalExample] = useState(false);
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-8 bg-gray-50">
+    <div className="max-w-4xl mx-auto p-6 space-y-8">
       <div className="text-center">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">
           React Position-Based Identity Demo
@@ -162,10 +162,53 @@ export default function PositionBasedIdentityDemo() {
         </div>
       </div>
 
-      {/* Example 2: Different component types - STATE RESET */}
+      {/* Example 2: Using key prop to force remount - STATE RESET */}
       <div className="bg-white rounded-lg shadow-lg p-6">
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-          🔄 Example 2: Different Component Types
+          🔑 Example 2: Using Key Prop to Force Reset
+        </h2>
+        <p className="text-gray-600 mb-4">
+          Same component type, same position, but with a key prop that changes
+          with userId. React treats components with different keys as different
+          instances.
+        </p>
+
+        <div className="mb-4">
+          <button
+            onClick={() => setIsPrimary(!isPrimary)}
+            className="px-6 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded font-medium"
+          >
+            Toggle with Key Reset ({isPrimary ? "Primary" : "Secondary"} →{" "}
+            {isPrimary ? "Secondary" : "Primary"})
+          </button>
+        </div>
+
+        <div className="border-2 border-dashed border-gray-300 p-4 rounded">
+          <p className="text-sm text-gray-500 mb-2">
+            Component at position 1 (with key prop):
+          </p>
+          {isPrimary ? (
+            <UserProfile key={123} userId={123} role="primary" />
+          ) : (
+            <UserProfile key={456} userId={456} role="secondary" />
+          )}
+        </div>
+
+        <div className="mt-4 p-4 bg-orange-50 border-l-4 border-orange-400">
+          <p className="text-sm text-orange-800">
+            <strong>What's happening:</strong> Even though it's the same
+            component type (UserProfile) at the same position, the key prop
+            changes from 123 to 456. React treats components with different keys
+            as completely different instances, so it unmounts the old one and
+            mounts a new one, resetting all state!
+          </p>
+        </div>
+      </div>
+
+      {/* Example 3: Different component types - STATE RESET */}
+      <div className="bg-white rounded-lg shadow-lg p-6">
+        <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+          🔄 Example 3: Different Component Types
         </h2>
         <p className="text-gray-600 mb-4">
           When we render different component types at the same position, React
