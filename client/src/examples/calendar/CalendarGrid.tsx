@@ -1,23 +1,20 @@
 import CalendarBody from "./CalendarBody";
 import HeaderRow from "./HeaderRow";
-import type { Appointment } from "./models";
+import type { CalendarEvent } from "./models";
 
+// CalendarGrid Component
 interface CalendarGridProps {
   days: string[];
   hours: number[];
-  appointments: Appointment[];
+  events: CalendarEvent[];
 }
 
-const CalendarGrid: React.FC<CalendarGridProps> = ({
-  days,
-  hours,
-  appointments,
-}) => {
+const CalendarGrid: React.FC<CalendarGridProps> = ({ days, hours, events }) => {
   return (
     <>
       {/* Header with days */}
       <HeaderRow days={days} />
-      <CalendarBody appointments={appointments} days={days} hours={hours} />
+      <CalendarBody events={events} days={days} hours={hours} />
     </>
   );
 };
