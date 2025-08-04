@@ -7,16 +7,19 @@ interface TimeColumnProps {
 
 const TimeColumn: React.FC<TimeColumnProps> = ({ hours }) => {
   return (
-    <div className="bg-gray-50">
+    <div className="bg-white relative">
       {hours.map((hour) => (
         <div
           key={hour}
-          className="h-15 px-4 py-2 text-sm text-gray-600 border-b flex items-start border-b-gray-300"
+          className="border-b border-gray-200 relative"
           style={{
             height: `${HOUR_HEIGHT}px`,
           }}
         >
-          {formatTime(hour)}
+          {/* Time label positioned at the top of each hour line */}
+          <div className="absolute -top-2 left-2 text-xs text-gray-600 bg-white px-1">
+            {formatTime(hour)}
+          </div>
         </div>
       ))}
     </div>
