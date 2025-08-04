@@ -1,28 +1,34 @@
 import type { CSSProperties } from "react";
-import { HOUR_HEIGHT, START_HOUR, type Appointment } from "./models";
+import {
+  HOUR_HEIGHT,
+  START_HOUR,
+  type Appointment,
+  type CalendarEvent,
+} from "./models";
 
-const getOverlappingGroups = (appointmentsInDay: Appointment[]) => {
-  const groups: Appointment[][] = [];
+const getOverlappingGroups = (eventsInDay: CalendarEvent[]) => {
+  const groups: CalendarEvent[][] = [];
 
-  appointmentsInDay.forEach((aptInDay) => {
-    const aptInDayEndTime = aptInDay.startTime + aptInDay.duration / 60;
+  eventsInDay.forEach((eventInDay) => {
+    const eventInDayEndTime = eventInDay.startTime + eventInDay.duration / 60;
 
     const foundGroup = groups.find((group) => {
-      return group.some((groupApt) => {
-        const groupAptEndTime = groupApt.startTime + groupApt.duration / 60;
+      return group.some((groupEvent) => {
+        const groupEventEndTime =
+          groupEvent.startTime + groupEvent.duration / 60;
         return (
-          (aptInDay.startTime < groupAptEndTime &&
-            aptInDayEndTime > groupApt.startTime) ||
-          (groupApt.startTime < aptInDayEndTime &&
-            groupAptEndTime > aptInDay.startTime)
+          (eventInDay.startTime < groupEventEndTime &&
+            eventInDayEndTime > groupEvent.startTime) ||
+          (groupEvent.startTime < eventInDayEndTime &&
+            groupEventEndTime > eventInDay.startTime)
         );
       });
     });
 
     if (foundGroup) {
-      foundGroup.push(aptInDay);
+      foundGroup.push(eventInDay);
     } else {
-      groups.push([aptInDay]);
+      groups.push([eventInDay]);
     }
   });
 
@@ -35,14 +41,14 @@ const getOverlappingGroups = (appointmentsInDay: Appointment[]) => {
         const group1 = groups[i];
         const group2 = groups[j];
 
-        // Check if any appointment in group1 overlaps with any in group2
-        const hasOverlap = group1.some((apt1) => {
-          const apt1End = apt1.startTime + apt1.duration / 60;
-          return group2.some((apt2) => {
-            const apt2End = apt2.startTime + apt2.duration / 60;
+        // Check if any event in group1 overlaps with any in group2
+        const hasOverlap = group1.some((event1) => {
+          const event1End = event1.startTime + event1.duration / 60;
+          return group2.some((event2) => {
+            const event2End = event2.startTime + event2.duration / 60;
             return (
-              (apt1.startTime < apt2End && apt1End > apt2.startTime) ||
-              (apt2.startTime < apt1End && apt2End > apt1.startTime)
+              (event1.startTime < event2End && event1End > event2.startTime) ||
+              (event2.startTime < event1End && event2End > event1.startTime)
             );
           });
         });
@@ -61,19 +67,19 @@ const getOverlappingGroups = (appointmentsInDay: Appointment[]) => {
   return groups;
 };
 
-const getBasicAppointmentStyle = (
-  appointmentsInDay: Appointment[],
-  appointment: Appointment
-): CSSProperties => {
-  const groups = getOverlappingGroups(appointmentsInDay);
+const getBasicEventStyle = (
+  eventsInDay: CalendarEvent[],
+  event: CalendarEvent
+): React.CSSProperties => {
+  const groups = getOverlappingGroups(eventsInDay);
 
-  const group = groups.find((g) => g.some((apt) => apt.id === appointment.id));
+  const group = groups.find((g) => g.some((evt) => evt.id === event.id));
 
   if (!group || group.length === 1) {
     return {
       position: "absolute",
-      top: `${(appointment.startTime - START_HOUR) * HOUR_HEIGHT}px`,
-      height: `${(appointment.duration / 60) * HOUR_HEIGHT}px`,
+      top: `${(event.startTime - START_HOUR) * HOUR_HEIGHT}px`,
+      height: `${(event.duration / 60) * HOUR_HEIGHT}px`,
       left: "4px",
       right: "4px",
       zIndex: 10,
@@ -81,20 +87,18 @@ const getBasicAppointmentStyle = (
   }
 
   const sortedGroup = [...group].sort((a, b) => a.startTime - b.startTime);
-  const appointmentIndex = sortedGroup.findIndex(
-    (apt) => apt.id === appointment.id
-  );
+  const eventIndex = sortedGroup.findIndex((evt) => evt.id === event.id);
   const totalOverlapping = group.length;
   const width = `calc((100% - 8px) / ${totalOverlapping})`;
-  const leftOffset = `calc(4px + ((100% - 8px) / ${totalOverlapping}) * ${appointmentIndex})`;
+  const leftOffset = `calc(4px + ((100% - 8px) / ${totalOverlapping}) * ${eventIndex})`;
 
   return {
     position: "absolute",
-    top: `${(appointment.startTime - START_HOUR) * HOUR_HEIGHT}px`,
-    height: `${(appointment.duration / 60) * HOUR_HEIGHT}px`,
+    top: `${(event.startTime - START_HOUR) * HOUR_HEIGHT}px`,
+    height: `${(event.duration / 60) * HOUR_HEIGHT}px`,
     left: leftOffset,
     width: width,
-    zIndex: 10 + appointmentIndex,
+    zIndex: 10 + eventIndex,
   };
 };
 
@@ -104,4 +108,4 @@ const formatTime = (hour: number) => {
   return `${displayHour}:00 ${period}`;
 };
 
-export { getBasicAppointmentStyle, formatTime };
+export { getBasicEventStyle, formatTime };
