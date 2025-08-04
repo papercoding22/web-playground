@@ -1,19 +1,20 @@
-import Appointment from "./Appointment";
-import { HOUR_HEIGHT, type Appointment as AppointmentType } from "./models";
+import EventRenderer from "./EventRenderer";
+import { HOUR_HEIGHT, type CalendarEvent } from "./models";
 
+// DayColumn Component
 interface DayColumnProps {
   days: string[];
   hours: number[];
-  appointments: AppointmentType[];
+  events: CalendarEvent[];
 }
 
-const DayColumn: React.FC<DayColumnProps> = ({ days, hours, appointments }) => {
+const DayColumn: React.FC<DayColumnProps> = ({ days, hours, events }) => {
   return (
     <>
       {days.map((day, dayIndex) => (
         <div
           key={`${day}-${dayIndex}`}
-          className="border-l border-l-gray-300  relative"
+          className="border-l border-l-gray-300 relative"
         >
           {/* Hour Slot */}
           {hours.map((hour) => (
@@ -24,18 +25,10 @@ const DayColumn: React.FC<DayColumnProps> = ({ days, hours, appointments }) => {
             ></div>
           ))}
 
-          {/* Appointments for this day */}
-          {appointments
-            .filter((apt) => apt.day === dayIndex)
-            .map((apt) => (
-              <Appointment
-                key={`${apt.id}`}
-                appointmentInDays={appointments.filter(
-                  (apt) => apt.day === dayIndex
-                )}
-                appointment={apt}
-              />
-            ))}
+          {/* Events for this day */}
+          <EventRenderer
+            eventsInDay={events.filter((event) => event.day === dayIndex)}
+          />
         </div>
       ))}
     </>
