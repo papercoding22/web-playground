@@ -1,22 +1,19 @@
 import DayColumn from "./DayColumn";
-import type { Appointment } from "./models";
+import type { CalendarEvent } from "./models";
 import TimeColumn from "./TimeColumn";
 
+// CalendarBody Component
 interface CalendarBodyProps {
   hours: number[];
   days: string[];
-  appointments: Appointment[];
+  events: CalendarEvent[];
 }
 
-const CalendarBody: React.FC<CalendarBodyProps> = ({
-  hours,
-  days,
-  appointments,
-}) => {
+const CalendarBody: React.FC<CalendarBodyProps> = ({ hours, days, events }) => {
   return (
     <div className="grid grid-cols-8 relative">
       <TimeColumn hours={hours} />
-      <DayColumn appointments={appointments} hours={hours} days={days} />
+      <DayColumn events={events} hours={hours} days={days} />
     </div>
   );
 };
